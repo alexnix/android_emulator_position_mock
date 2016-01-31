@@ -12,7 +12,7 @@ app.get('/', function (req, res) {
 
 app.post('/api/latLng/:lat/:lng', function(req, res){
 	if(enable)
-		emulator.exec("geo fix "+req.params.lat+" "+req.params.lng);
+		emulator.exec("geo fix "+req.params.lng+" "+req.params.lat);
 	res.status(200).send();
 });
 
