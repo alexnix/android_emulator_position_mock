@@ -4,7 +4,8 @@
   "description": "GUI for easily mock Android Emulator Location. You can also simulate moving on the map.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "author": "Alexandru Niculae",
   "license": "ISC",
