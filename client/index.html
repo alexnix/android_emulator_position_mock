@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      html, body { height: 100%; margin: 0; padding: 0; }
+      #map { height: 100%; }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script type="text/javascript">
+
+      var map, marker;
+      var me = {
+        lat: null,
+        lng: null,
+        map: null,
+        marker: null,
+        step: 0.000007,
+        init: function(lat, lng, map, marker){
+          this.lat = lat;
+          this.lng = lng;
+          this.map = map;
+          this.marker = marker;
+        },
+        left: function() {
+          this.lng -= this.step;
+          this.update();
+        },
+        right: function(){
+          this.lng += this.step;
+          this.update();
+        },
+        up: function() {
+          this.lat += this.step;
+          this.update();
+        },
+        down: function() {
+          this.lat -= this.step;
+          this.update();
+        },
+        position: function(){
+          return new google.maps.LatLng(this.lat, this.lng);
+        },
+        update: function(){
+          console.log("!!");
+          this.marker.setPosition(this.position());
+          $.post('/api/latLng/'+this.lat+'/'+this.lng);
+        }
+      };
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 15
+        });
+
+        marker = new google.maps.Marker({
+          map: map,
+          icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/BlackDot.svg/20px-BlackDot.svg.png'
+        });
+
+        navigator.geolocation.getCurrentPosition(function(position){
+          me.init(position.coords.latitude, position.coords.longitude, map, marker);
+          map.setCenter(me.position());
+          marker.setPosition(me.position());
+        })
+
+      }
+          
+
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script type="text/javascript">
+      $(document).keydown(function(e) {
+          switch(e.which) {
+              case 37: // left
+              me.left();
+              break;
+
+              case 38: // up
+              me.up();
+              break;
+
+              case 39: // right
+              me.right();
+              break;
+
+              case 40: // down
+              me.down();
+              break;
+
+              default: return; // exit this handler for other keys
+          }
+          e.preventDefault(); // prevent the default action (scroll / move caret)
+      });
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAWColN1am3vdiGdBssTJ6Vp1aoQ1SwjdA&callback=initMap"></script>
+  </body>
+</html>
