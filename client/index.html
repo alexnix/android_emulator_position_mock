@@ -7,8 +7,34 @@
     </style>
   </head>
   <body>
+    
     <div id="map"></div>
     <script type="text/javascript">
+    $(function(){
+      $(document).keydown(function(e) {
+          switch(e.which) {
+              case 65: // left
+              me.left();
+              break;
+
+              case 87: // up
+              me.up();
+              break;
+
+              case 68: // right
+              me.right();
+              break;
+
+              case 83: // down
+              me.down();
+              break;
+
+              default: return; // exit this handler for other keys
+          }
+          e.preventDefault(); // prevent the default action (scroll / move caret)
+      });
+    });
+     
 
       var map, marker;
       var me = {
@@ -72,28 +98,7 @@
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script type="text/javascript">
-      $(document).keydown(function(e) {
-          switch(e.which) {
-              case 65: // left
-              me.left();
-              break;
-
-              case 87: // up
-              me.up();
-              break;
-
-              case 68: // right
-              me.right();
-              break;
-
-              case 83: // down
-              me.down();
-              break;
-
-              default: return; // exit this handler for other keys
-          }
-          e.preventDefault(); // prevent the default action (scroll / move caret)
-      });
+     
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAWColN1am3vdiGdBssTJ6Vp1aoQ1SwjdA&callback=initMap"></script>
   </body>
